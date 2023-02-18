@@ -1,0 +1,578 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Bookmark Api "
+    },
+    "components": {
+      "securitySchemes": {
+        "bearerAuth": {
+          "type": "http",
+          "scheme": "bearer",
+          "bearerFormat": "JWT"
+        }
+      }
+    },
+   
+
+    "tags": [
+    {
+      "name": "List of actions",
+      "description": "ECOMMERCE API"
+    }
+  ],
+  "servers": [
+    {
+    "url": "/"
+    }
+],
+"paths": {
+  "/register": {
+      "post": {
+      "tags": [
+          "User"
+      ],
+      "summary": "Register",
+      "requestBody": {
+      "description": "Register",
+      "required": true,
+      "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                  "username": {
+                  "type": "string"
+                  },
+                  "email": {
+                  "type": "string"
+                  },
+                  "password":{
+                      "type": "string"
+                  },
+                  "password_confirmation":{
+                      "type": "string"
+                  }
+              }
+              }
+              }
+          }
+      },
+      "responses": {
+          "200": {
+              "description": "OK"
+              }
+          },
+          "404": {
+              "description": "NOT FOUND"
+      }
+      }
+      },
+      "/login":{
+        "post": {
+          "tags": [
+              "User"
+          ],
+          "summary": "Login form",
+          "requestBody": {
+          "description": "Login",
+          "required": true,
+          "content": {
+              "application/json": {
+              "schema": {
+                  "type": "object",
+                  "properties": {
+                      "email": {
+                      "type": "string"
+                      },
+                      "password":{
+                          "type": "string"
+                      }
+                    }
+                  }}}},
+                  "responses": {
+                      "200": {
+                          "description": "OK"
+                          }
+                      },
+                      "404": {
+                          "description": "NOT FOUND"
+                  }
+                }},
+                "/forgotpassword":{
+                  "post": {
+                    "tags": [
+                        "User"
+                    ],
+                    "summary": "forgot password",
+                    "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "email": {
+                                "type": "string"
+                                }
+                              }
+                            }}}},
+                            "responses": {
+                                "200": {
+                                    "description": "OK"
+                                    }
+                                },
+                                "404": {
+                                    "description": "NOT FOUND"
+                            }
+                          }},
+                          "/resetpassword/{token}": {
+                            "post": {
+                              "tags": ["User"],
+                              "summary": "Reset user password",
+                              "description": "Endpoint to reset a user's password using a reset token.",
+                              "parameters": [
+                                {
+                                  "name": "token",
+                                  "in": "path",
+                                  "description": "Reset token received via email.",
+                                  "required": true,
+                                  "schema": {
+                                    "type": "string"
+                                  }
+                                }
+                              ],
+                              "requestBody": {
+                                "required": true,
+                                "content": {
+                                  "application/json": {
+                                    "schema": {
+                                      "type": "object",
+                                      "properties": {
+                                        "password": {
+                                          "type": "string",
+                                          "description": "New password for the user."
+                                        },
+                                        "confirm_password": {
+                                          "type": "string",
+                                          "description": "Confirm new password for the user."
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "responses": {
+                                "200": {
+                                  "description": "Password changed successfully."
+                                },
+                                "400": {
+                                  "description": "Passwords do not match."
+                                },
+                                "404": {
+                                  "description": "Token may be expired, please try again."
+                                }
+                              }
+                            }
+                          },
+                "/profile":{
+                  "get": {
+                    "tags": [
+                        "User"
+                    ],
+                    "security": [
+                      {
+                        "bearerAuth": []
+                      }
+                    ],
+                    "summary": "User Information",
+                    "requestBody": {
+                    "content": {
+                        "application/json": {
+                       }}},
+                            "responses": {
+                                "200": {
+                                    "description": "OK"
+                                    },
+                                "404": {
+                                    "description": "NOT FOUND"
+                            }
+                          }
+                          },
+                    "post":  {
+                      "tags": [
+                          "User"
+                      ],
+                      "security": [
+                        {
+                          "bearerAuth": []
+                        }
+                      ],
+                      "summary": "Change User Profile",
+                      "requestBody": {
+                      "content": {
+                        "multipart/form-data": {
+                          "schema": {
+                            "type": "object",
+                            "properties": {
+                              "Username": {
+                                "type": "string"
+                              },
+                              "email":{
+                                "type": "string"
+                              },
+                              "image": {
+                                "type": "string",
+                                "format": "binary"
+                              }
+                            }
+                          }}}},
+                          "responses": {
+                            "200": {
+                                "description": "OK"
+                                }
+                            },
+                            "404": {
+                                "description": "NOT FOUND"
+                        }
+                            
+                          }
+                        },
+ "/products":{
+                  "get": {
+                    "tags": [
+                        "Products"
+                    ],
+                    "security": [
+                      {
+                        "bearerAuth": []
+                      }
+                    ],
+                    "summary": "product",
+                    "requestBody": {
+                    "content": {
+                        "application/json": {
+                       }}},
+                            "responses": {
+                                "200": {
+                                    "description": "OK"
+                                    },
+                                "404": {
+                                    "description": "NOT FOUND"
+                            }
+                          }
+                          },
+                    "post":  {
+                      "tags": [
+                          "Products"
+                      ],
+                      "security": [
+                        {
+                          "bearerAuth": []
+                        }
+                      ],
+                      "summary": " Add product",
+                      "requestBody": {
+                      "content": {
+                        "multipart/form-data": {
+                          "schema": {
+                            "type": "object",
+                            "properties": {
+                              "product_image": {
+                                "type": "string",
+                                "format": "binary"
+                              },
+                              "product_name": {
+                                "type": "string"
+                              },
+                              "product_des": {
+                                "type": "string"
+                              },
+                              "product_price": {
+                                "type": "integer"
+                              },
+                              "product_quantity":{
+                                "type": "integer"
+                              }
+                            }
+                          }}}},
+                          "responses": {
+                            "200": {
+                                "description": "OK"
+                                }
+                            },
+                            "404": {
+                                "description": "NOT FOUND"
+                        }
+                            
+                          }
+                        },
+    "/addtocart/{id}":{
+
+                          "get" :{
+                              "tags": [
+                                  "Cart"
+                              ],
+                              "summary": "Product",
+                              "parameters": [{
+                                "name": "id",
+                                "in": "path",
+                                "description": "product id to be added",
+                                "required": true,
+                                "type": "integer"
+                              }],
+                              "security": [
+                                {
+                                  "bearerAuth": []
+                                }
+                              ],
+                              "responses": {
+                              "200": {
+                                  "description": "OK"
+                              },
+                              "404": {
+                                  "description": "NOT FOUND"
+                                  }
+                          }
+                          },
+                          "post":{
+                            "tags": [
+                                "Cart"
+                            ],
+                            "summary": "Add Item to cart",
+                            "parameters": [{
+                              "name": "id",
+                              "in": "path",
+                              "description": "product id to be added",
+                              "required": true,
+                              "type": "integer"
+                            }],
+                            "security": [
+                              {
+                                "bearerAuth": []
+                              }
+                            ],
+                            "requestBody": {
+                            "required": true,
+                            "content": {
+                                "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "quantity":{
+                                            "type": "integer",
+                                            "default":1
+                                        }
+                                      }
+                                    }}}},
+                                    "responses": {
+                                        "200": {
+                                            "description": "OK"
+                                            },
+                                          "404": {
+                                              "description": "NOT FOUND"
+                                      }
+                                       }
+                                        
+                                  }
+                          },                         
+          "/viewcart":{
+            "get":{
+              "tags":[
+                "Cart"
+              ],
+              "summary": "Cart",
+              "security": [
+                {
+                  "bearerAuth": []
+                }
+              ],
+              "responses": {
+              "200": {
+                  "description": "OK"
+              },
+              "404": {
+                  "description": "NOT FOUND"
+                  }
+          }
+          }
+        },
+   "/updatecart/{id}":{
+   "get":{ "tags":[
+     "Cart"
+    ],
+    "summary": "Get cart item by id",
+    "parameters": [{
+    "name": "id",
+    "in": "path",
+    "description": "cart id to be added",
+    "required": true,
+    "type": "integer"
+    }],
+    "security": [
+     {
+    "bearerAuth": []
+     }
+     ],
+     "responses": {
+      "200": {
+          "description": "OK"
+      },
+      "404": {
+          "description": "NOT FOUND"
+          }
+  }
+   },
+   "put":{"tags":["Cart"],
+  "summary": "Cart update",
+  "parameters": [{
+  "name": "id",
+  "in": "path",
+  "description": "cart id to be added",
+  "required": true,
+  "type": "integer"
+  }],
+  "security": [
+   {
+  "bearerAuth": []
+   }
+   ],
+   "requestBody": {
+   "content": {
+       "application/json": {
+        "schema": {
+          "type": "object",
+          "properties": {
+              "quantity": {
+              "type": "integer",
+              "default": 1
+              }
+            }
+          }
+      }}},
+      "responses": {
+        "200": {
+            "description": "OK"
+            }
+        },
+        "404": {
+            "description": "NOT FOUND"
+    }
+  },
+"delete":{"tags":["Cart"],
+"summary": "Cart delete",
+"parameters": [{
+"name": "id",
+"in": "path",
+"description": "cart id to be deleted",
+"required": true,
+"type": "integer"
+}],
+"security": [
+ {
+"bearerAuth": []
+ }
+ ],
+ "responses": {
+  "200": {
+      "description": "OK"
+      }
+  },
+  "404": {
+      "description": "NOT FOUND"
+}
+}
+   },
+
+
+"/cartpayment":{
+"get":{"tags":["Payment"],
+"summary": "Cart payment",
+"security": [
+ {
+"bearerAuth": []
+ }
+ ],
+ "responses": {
+  "200": {
+      "description": "OK"
+      }
+  },
+  "404": {
+      "description": "NOT FOUND"
+}
+}
+},
+"/productpayment/{id}":{
+  "post":{"tags":["Payment"],
+  "summary": "Product payment",
+  "parameters": [{
+  "name": "id",
+  "in": "path",
+  "description": "id of product to be purchased",
+  "required": true,
+  "type": "integer"
+  }],
+  "security": [
+   {
+  "bearerAuth": []
+   }
+   ],
+   "requestBody": {
+   "content": {
+       "application/json": {
+        "schema": {
+          "type": "object",
+          "properties": {
+              "quantity": {
+              "type": "integer",
+              "default": 1
+              }
+            }
+          }
+      }}},
+      "responses": {
+        "200": {
+            "description": "OK"
+            }
+        },
+        "404": {
+            "description": "NOT FOUND"
+    }
+  }
+},
+"/cartexecute":{
+  "get":{"tags":["Payment Redirect path"],
+  "summary": "Cart payment",
+   "responses": {
+    "200": {
+        "description": "OK"
+        }
+    },
+    "404": {
+        "description": "NOT FOUND"
+  }
+  }
+},
+"/productexecute":{
+  "get":{"tags":["Payment Redirect path"],
+  "summary": "Product payment",
+   "responses": {
+    "200": {
+        "description": "OK"
+        }
+    },
+    "404": {
+        "description": "NOT FOUND"
+  }
+  }
+}
+}
+}
+
+   
+     
+                        
+                        
+                        
+                        
