@@ -11,6 +11,7 @@ from faker import Faker
 from itsdangerous import URLSafeTimedSerializer as Serializer
 import secrets
 from datetime import datetime
+from flask_mail import Mail,Message
 
 
 
@@ -32,14 +33,21 @@ app.config['SECRET_KEY']='uhdbxdsjwxwsdeewdxel'
 app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///ecommerce.db'
 app.config['JWT_SECRET_KEY']='jndwdcnjwejkweidjjkdb'
 app.config['JWT_ACCESS_TOKEN_EXPIRES']=3600
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_USERNAME'] = 'shashu619shashu@gmail.com'
+app.config['MAIL_PASSWORD'] = 'wurughwchxxmaoal'
 db=SQLAlchemy(app)
 migrate=Migrate(app,db)
 login=LoginManager(app)
 jwt=JWTManager(app)
+mail = Mail(app)
 
 @login.user_loader
 def load_user(id):
     return User.query.get(id) 
+
 
 class User(db.Model,UserMixin):
     id=db.Column(db.Integer, primary_key=True)
@@ -123,6 +131,16 @@ class Order(db.Model):
    
     def __repr__(self):
         return f"Order_items('{self.id},{self.user_id},{self.product_id}')"
+    
+    
+def send_email(user,value):
+    msg = Message(
+        subject='Reset Password',
+        recipients=[user.email],
+        sender=app.config['MAIL_USERNAME'],
+        body=f'Your reset link is ' + value
+    )
+    mail.send(msg)
     
 
 @app.route('/register',methods=['POST'])
@@ -477,6 +495,7 @@ def resetpassword():
         return jsonify("Email not yet registered")
     link="http://127.0.0.1:5000/resetpassword/"+user.reset_password()
     print(link)
+    send_email(user,link)
     return jsonify("A link has been sent to your registered email address to reset your password")
 
 @app.route('/resetpassword/<token>', methods=['POST'])
